@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "Review": {
+      "title": "Review",
+      "description": "Board game reviews written by the admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "number" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "type": { "type": "string" },
+        "players": { "type": "string" },
+        "time": { "type": "string" },
+        "score": { "type": "number" },
+        "verdict": { "type": "string" },
+        "body": { "type": "string" },
+        "tags": { "type": "array" },
+        "date": { "type": "string" },
+        "featured": { "type": "boolean" },
+        "emoji": { "type": "string" },
+        "spoons": { "type": "string", "enum": ["low", "medium", "high"] },
+        "image": { "type": "string" },
+        "images": { "type": "array" },
+        "isUserAdded": { "type": "boolean" },
+        "instagramUrl": { "type": "string" },
+        "buyUrl": { "type": "string" },
+        "likesCount": { "type": "number" },
+        "commentsCount": { "type": "number" }
+      },
+      "required": ["id", "title", "subtitle", "type", "players", "time", "score", "verdict", "body", "tags", "date", "featured", "emoji", "spoons"]
+    },
+    "ReviewList": {
+      "title": "ReviewList",
+      "description": "Curated or user-created board game lists",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "desc": { "type": "string" },
+        "tag": { "type": "string" },
+        "reviewIds": { "type": "array" },
+        "customNotes": { "type": "object" },
+        "isUserAdded": { "type": "boolean" }
+      },
+      "required": ["id", "title", "desc", "tag", "reviewIds"]
+    },
+    "Affiliate": {
+      "title": "Affiliate",
+      "description": "Game store affiliate link options",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "discountCode": { "type": "string" },
+        "receivesMoney": { "type": "boolean" }
+      },
+      "required": ["id", "name", "url", "discountCode", "receivesMoney"]
+    }
+  },
+  "firestore": {
+    "reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Collection of board game reviews"
+    },
+    "lists/{listId}": {
+      "schema": "ReviewList",
+      "description": "Collection of board game lists"
+    },
+    "affiliates/{affiliateId}": {
+      "schema": "Affiliate",
+      "description": "Collection of affiliate links"
+    }
+  }
+}

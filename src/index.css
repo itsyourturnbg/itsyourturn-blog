@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #640D5F;
+  --color-navy-mid: #560a52;
+  --color-amber: #FFCC00;
+  --color-amber-light: #FFD740;
+  --color-amber-pale: #FFFBE6;
+  --color-cream: #F5F0E8;
+  --color-felt: #4A7B52;
+  --color-felt-light: #6B8F71;
+  --color-off-white: #FAF8F4;
+  --color-text-main: #640D5F;
+  --color-text-muted: #5C6070;
+  --color-text-light: #8B92A8;
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-mono: "Courier Prime", "Courier New", monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-off-white);
+  color: var(--color-text-main);
+  line-height: 1.6;
+}
+
+/* Custom repeating line pattern for hero background */
+.bg-stripe-pattern {
+  background: repeating-linear-gradient(
+    60deg,
+    transparent,
+    transparent 38px,
+    rgba(232, 168, 48, 0.035) 38px,
+    rgba(232, 168, 48, 0.035) 40px
+  );
+}
+
+.hex-pip-shape {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}

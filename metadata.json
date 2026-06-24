@@ -1,0 +1,6 @@
+{
+  "name": "It's Your Turn",
+  "description": "Board game reviews and collections, curated by mental energy cost.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

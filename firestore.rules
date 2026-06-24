@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reviews collection rules
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if false; // Back-end writes are executed via the Admin SDK which bypasses security rules
+    }
+
+    // Lists collection rules
+    match /lists/{listId} {
+      allow read: if true;
+      allow write: if false; // Back-end writes are executed via the Admin SDK which bypasses security rules
+    }
+
+    // Affiliates collection rules
+    match /affiliates/{affiliateId} {
+      allow read: if true;
+      allow write: if false; // Back-end writes are executed via the Admin SDK which bypasses security rules
+    }
+  }
+}
