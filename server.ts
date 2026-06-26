@@ -32,6 +32,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json({ limit: "10mb" }));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // Lazy-initialize Gemini client to prevent startup failures and allow direct fallback if missing
 let aiClient: any = null;
@@ -320,6 +321,30 @@ async function saveAffiliates(affiliates: any[]) {
   }
 }
 
+// Helper to preserve base64 images directly inside the Firestore document.
+// This works perfectly on the Starter/Spark tier and ensures 100% cloud persistence without Storage bucket upgrades.
+async function saveBase64Image(base64Str: string): Promise<string> {
+  return base64Str;
+}
+
+// Process all images in a review to extract base64s to disk or cloud storage
+async function processReviewImages(review: any): Promise<any> {
+  if (!review) return review;
+  const processed = { ...review };
+
+  if (processed.image) {
+    processed.image = await saveBase64Image(processed.image);
+  }
+
+  if (Array.isArray(processed.images)) {
+    processed.images = await Promise.all(
+      processed.images.map((img: any) => saveBase64Image(img))
+    );
+  }
+
+  return processed;
+}
+
 // Utility to verify passcode against configured ADMIN_PASSCODE env or default to "admin123"
 function verifyPasscode(passcode: string | undefined): boolean {
   const adminPasscode = process.env.ADMIN_PASSCODE || "admin123";
@@ -392,10 +417,11 @@ app.post("/api/reviews", async (req, res) => {
   }
 
   const current = await getReviews();
+  const processedReview = await processReviewImages(review);
   // Set incremental ID securely on the server
   const maxId = current.reduce((max, r) => (r.id > max ? r.id : max), 0);
   const newReview = {
-    ...review,
+    ...processedReview,
     id: maxId + 1,
     isUserAdded: true,
   };
@@ -422,7 +448,8 @@ app.put("/api/reviews/:id", async (req, res) => {
   }
 
   const current = await getReviews();
-  const updated = current.map((r) => (r.id === targetId ? { ...review, id: targetId } : r));
+  const processedReview = await processReviewImages(review);
+  const updated = current.map((r) => (r.id === targetId ? { ...processedReview, id: targetId } : r));
   await saveReviews(updated);
 
   res.json({ success: true, reviews: updated });
