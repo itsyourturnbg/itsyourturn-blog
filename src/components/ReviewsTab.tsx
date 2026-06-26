@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Review } from "../types";
-import { Sparkles, Dice5, SlidersHorizontal, Download, Camera, Search, X } from "lucide-react";
-import InstagramImportModal from "./InstagramImportModal";
+import { Sparkles, Dice5, SlidersHorizontal, Plus, Camera, Search, X } from "lucide-react";
+import ReviewWriterModal from "./ReviewWriterModal";
 import ReplaceImageModal from "./ReplaceImageModal";
 import ImageCarousel from "./ImageCarousel";
 
@@ -145,8 +145,8 @@ export default function ReviewsTab({
                   onClick={() => setIsImportOpen(true)}
                   className="bg-navy hover:bg-navy-mid text-white border-2 border-white/20 font-mono text-xs font-bold uppercase tracking-widest px-6 py-2.5 hover:text-amber transition-all transform hover:-translate-y-0.5 cursor-pointer flex items-center gap-2"
                 >
-                  <Download className="w-4 h-4 text-amber" />
-                  Import from Instagram
+                  <Plus className="w-4 h-4 text-amber" />
+                  Write Review / Blog Post
                 </button>
               )}
             </div>
@@ -410,9 +410,9 @@ export default function ReviewsTab({
         </div>
       </section>
 
-      {/* Instagram Importer Modal */}
+      {/* Review Writer Modal */}
       {isImportOpen && onReviewsUpdated && (
-        <InstagramImportModal
+        <ReviewWriterModal
           isOpen={isImportOpen}
           onClose={() => setIsImportOpen(false)}
           reviews={reviews}
